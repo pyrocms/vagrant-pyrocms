@@ -1,3 +1,6 @@
 [submodule "src"]
 	path = src
 	url = git://github.com/pyrocms/pyrocms.git
+[submodule "modules/php"]
+	path = modules/php
+	url = git://github.com/philsturgeon/puppet-php.git
