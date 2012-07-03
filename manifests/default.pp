@@ -7,16 +7,19 @@ include apache
 include mysql
 include php
 
+$docroot = '/home/vagrant/www/'
+
+# Apache setup
 class {'apache::php': }
 
 apache::vhost { 'local.pyrocms':
 	priority => '20',
 	port => '80',
-	docroot => '/vagrant/src/',
+	docroot => $docroot,
 	configure_firewall => false,
 }
 
-# Extensions
+# PHP Extensions
 php::module { ['xdebug', 'mysql', 'curl', 'gd'] : 
     notify => [ Service['apache2'], ],
 }
@@ -34,6 +37,54 @@ exec { "phpunit":
     require => Package["php-pear"],
 }
 
-# PHPUnit
-$extras = ['vim', ]
+# MySQL Server
+class { 'mysql::server':
+  config_hash => { 'root_password' => 'sn3aky' }
+}
+
+mysql::db { 'pyrocms':
+    user     => 'pyrocms',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['all'],
+    charset => 'utf8',
+}
+
+# Other Packages
+$extras = ['vim', 'curl', 'git']
 package { $extras : ensure => 'installed' }
+
+# PyroCMS Setup
+
+file { $docroot:
+    ensure  => 'directory',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+}
+
+exec { "pyrocms":
+    command => "/usr/bin/git clone git://github.com/pyrocms/pyrocms.git ${docroot}",
+    require => [ File[$docroot], Package["git"] ],
+}
+
+exec { "pyrocms-cloned":
+    command => "test -d ${docroot}cms/",
+    require => [ Exec['pyrocms'] ],
+}
+
+file { "${docroot}system/cms/config/config.php":
+    ensure  => "present",
+    mode    => "0666",
+    owner   => $apache::params::user,
+    group   => $apache::params::group,
+    require => Exec["pyrocms-cloned"],
+}
+
+$writeable_dirs = ["${docroot}system/cms/cache/", "${docroot}system/cms/config/", "${docroot}addons/", "${docroot}assets/cache/", "${docroot}uploads/"]
+
+file { $writeable_dirs:
+    ensure => "directory",
+    mode   => '0777',
+
+    require => Exec["pyrocms-cloned"],
+}
