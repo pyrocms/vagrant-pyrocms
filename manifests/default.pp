@@ -67,17 +67,12 @@ exec { "pyrocms":
     require => [ File[$docroot], Package["git"] ],
 }
 
-exec { "pyrocms-cloned":
-    command => "test -d ${docroot}cms/",
-    require => [ Exec['pyrocms'] ],
-}
-
 file { "${docroot}system/cms/config/config.php":
     ensure  => "present",
     mode    => "0666",
     owner   => $apache::params::user,
     group   => $apache::params::group,
-    require => Exec["pyrocms-cloned"],
+    require => Exec["pyrocms"],
 }
 
 $writeable_dirs = ["${docroot}system/cms/cache/", "${docroot}system/cms/config/", "${docroot}addons/", "${docroot}assets/cache/", "${docroot}uploads/"]
@@ -86,5 +81,5 @@ file { $writeable_dirs:
     ensure => "directory",
     mode   => '0777',
 
-    require => Exec["pyrocms-cloned"],
+    require => Exec["pyrocms"],
 }
