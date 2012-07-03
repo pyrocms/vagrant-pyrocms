@@ -30,10 +30,8 @@ Vagrant::Config.run do |config|
   # network interface) by any external networks.
   config.vm.network :hostonly, "192.168.33.10"
 
-  # Assign this VM to a bridged network, allowing you to connect directly to a
-  # network using the host's network device. This makes the VM appear as another
-  # physical device on your network.
-  #config.vm.network :bridged
+  # Set the default project share to use nfs
+  config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
