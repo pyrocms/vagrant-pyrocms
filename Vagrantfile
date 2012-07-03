@@ -35,7 +35,7 @@ Vagrant::Config.run do |config|
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
-  config.vm.forward_port 80, 8897
+  config.vm.forward_port 80, 8089
 
   # Update the server so references dont fail in Puppet manifests
   config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"

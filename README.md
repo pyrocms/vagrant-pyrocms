@@ -24,7 +24,7 @@ Install [Vagrant](http://vagrantup.com/v1/docs/getting-started/index.html) (whic
 	vagrant up
 
 That is all you need to get a virtual machine with everything you need set up to run PyroCMS. Check it is working by browsing 
-to `http://localhost:8897/`. You can configure it to work on any port, we just put it there as 8080 is often taken too.
+to `http://localhost:8089/`. You can configure it to work on any port, we just put it there as 8080 is often taken too.
 
 ## Configurating Vagrant
 

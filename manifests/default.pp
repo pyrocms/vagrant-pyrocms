@@ -19,6 +19,8 @@ apache::vhost { 'local.pyrocms':
 	configure_firewall => false,
 }
 
+a2mod { 'rewrite': ensure => present; }
+
 # PHP Extensions
 php::module { ['xdebug', 'mysql', 'curl', 'gd'] : 
     notify => [ Service['httpd'], ],
@@ -39,7 +41,7 @@ exec { "phpunit":
 
 # MySQL Server
 class { 'mysql::server':
-  config_hash => { 'root_password' => 'sn3aky' }
+  config_hash => { 'root_password' => 'wh4ty0ul00kingat' }
 }
 
 mysql::db { 'pyrocms':
