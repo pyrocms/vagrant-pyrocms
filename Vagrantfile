@@ -2,16 +2,24 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "lucid32"
+  # Operating System
 
-  # The url from where the 'config.vm.box' box will be fetched if it
-  # doesn't already exist on the user's system.
-  config.vm.box_url = "http://files.vagrantup.com/lucid32.box"
+  ## Ubuntu 10.04 LTS (32-bit)
+  #config.vm.box = "lucid32"
+  #config.vm.box_url = "http://files.vagrantup.com/lucid32.box"
+
+  ## Ubuntu 10.04 LTS (64-bit)
+  # config.vm.box = "lucid64"
+  # config.vm.box_url = "http://files.vagrantup.com/lucid64.box"
+ 
+  ## Ubuntu 12.04 LTS (32-bit)
+  # config.vm.box = "precise32"
+  # config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+
+  ## Ubuntu 12.04 LTS (64-bit)
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
