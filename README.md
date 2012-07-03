@@ -18,16 +18,18 @@ Puppet manages your servers: describe machine configurations in an easy-to-read 
 
 Install [Vagrant](http://vagrantup.com/v1/docs/getting-started/index.html) (which requires [VirtualBox](https://www.virtualbox.org/wiki/Downloads)) then run the following commands:
 
-	git clone --recursive git://github.com/pyrocms/vagrant.git pyrocms-vagrant
-	cd pyrocms-vagrant/
+	mkdir ~/vagrant
+	git clone --recursive git://github.com/pyrocms/vagrant.git ~/vagrant/pyrocms
+	cd ~/vagrant/pyrocms
 	vagrant up
 
-That is all you need to get a virtual machine with everything you need set up to run PyroCMS.
+That is all you need to get a virtual machine with everything you need set up to run PyroCMS. Check it is working by browsing 
+to `http://localhost:8897/`. You can configure it to work on any port, we just put it there as 8080 is often taken too.
 
 ## Configurating Vagrant
 
-There is a `Vagrantfile` included in the root of this repository with some default settings enabled. Change the hostname IP if you need, 
-or use a bridged connection. It's all in [here](https://github.com/pyrocms/vagrant/blob/master/Vagrantfile).
+There is a `Vagrantfile` included in the root of this repository with some default settings enabled. Change the port number or switch to 
+using a hostonly connection. It's all in [here](https://github.com/pyrocms/vagrant/blob/master/Vagrantfile).
 
 ## Current Manfiests
 
@@ -47,12 +49,22 @@ sorts of weird and wonderful things with PHP 5.4, SQLite, Postgres, Redis, etc, 
 * PHPUnit
 * Vim
 
+MySQL Details
+
+__User:__ pyrocms
+__Pass:__ password
+__Database:__ pyrocms
+
 ## TODO
 
 ### CentOS / Redhat
 
-Currently this repo uses a [fork](https://github.com/philsturgeon/puppet-php) of [saz/puppet-php](https://github.com/saz/puppet-php). This 
-module only supports Ubuntu and Debian, but could easily be extended to support more by adding to the [params.pp](https://github.com/philsturgeon/puppet-php/blob/master/manifests/params.pp). If there are any CentOS guys out there, we would love your help making this work.
+Currently this repo uses a [fork](fork) of [saz/puppet-php](fork), which 
+only supports Ubuntu and Debian, but could easily be extended to support more by adding to the [params.pp](params). If there are any CentOS guys out there, we would love your help making this work.
+
+  [fork]: https://github.com/philsturgeon/puppet-php
+  [saz]: https://github.com/saz/puppet-php
+  [params]: https://github.com/philsturgeon/puppet-php/blob/master/manifests/params.pp
 
 ### More Manifiests
 

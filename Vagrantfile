@@ -31,16 +31,11 @@ Vagrant::Config.run do |config|
   config.vm.network :hostonly, "192.168.33.10"
 
   # Set the default project share to use nfs
-  config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
+  config.vm.share_folder("v-root", "/vagrant", "./www", :nfs => true)
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
-  config.vm.forward_port 80, 8080
-
-  # Share an additional folder to the guest VM. The first argument is
-  # an identifier, the second is the path on the guest to mount the
-  # folder, and the third is the path on the host to the actual folder.
-  # config.vm.share_folder "v-data", "/vagrant_data", "../data"
+  config.vm.forward_port 80, 8897
 
   # Update the server so references dont fail in Puppet manifests
   config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"

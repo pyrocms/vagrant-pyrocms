@@ -7,7 +7,7 @@ include apache
 include mysql
 include php
 
-$docroot = '/home/vagrant/www/'
+$docroot = '/vagrant/pyrocms/'
 
 # Apache setup
 class {'apache::php': }
@@ -21,7 +21,7 @@ apache::vhost { 'local.pyrocms':
 
 # PHP Extensions
 php::module { ['xdebug', 'mysql', 'curl', 'gd'] : 
-    notify => [ Service['apache2'], ],
+    notify => [ Service['httpd'], ],
 }
 
 # PHPUnit
@@ -51,28 +51,19 @@ mysql::db { 'pyrocms':
 }
 
 # Other Packages
-$extras = ['vim', 'curl', 'git']
+$extras = ['vim', 'curl']
 package { $extras : ensure => 'installed' }
 
 # PyroCMS Setup
 
 file { $docroot:
     ensure  => 'directory',
-    owner   => 'vagrant',
-    group   => 'vagrant',
-}
-
-exec { "pyrocms":
-    command => "/usr/bin/git clone git://github.com/pyrocms/pyrocms.git ${docroot}",
-    require => [ File[$docroot], Package["git"] ],
 }
 
 file { "${docroot}system/cms/config/config.php":
     ensure  => "present",
     mode    => "0666",
-    owner   => $apache::params::user,
-    group   => $apache::params::group,
-    require => Exec["pyrocms"],
+    require => File[$docroot],
 }
 
 $writeable_dirs = ["${docroot}system/cms/cache/", "${docroot}system/cms/config/", "${docroot}addons/", "${docroot}assets/cache/", "${docroot}uploads/"]
@@ -80,6 +71,5 @@ $writeable_dirs = ["${docroot}system/cms/cache/", "${docroot}system/cms/config/"
 file { $writeable_dirs:
     ensure => "directory",
     mode   => '0777',
-
-    require => Exec["pyrocms"],
+    require => File[$docroot],
 }
