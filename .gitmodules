@@ -1,5 +1,5 @@
-[submodule "src"]
-	path = src
+[submodule "www/pyrocms"]
+	path = www/pyrocms
 	url = git://github.com/pyrocms/pyrocms.git
 [submodule "modules/php"]
 	path = modules/php
