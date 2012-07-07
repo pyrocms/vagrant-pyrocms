@@ -1,13 +1,17 @@
 ###########################
-# PyroCMS Vagrant Config  #
-# Setup: Default (LAMP)   #
+# PyroCMS Puppet Config   #
+###########################
+# OS          : Linux     #
+# Database    : MySQL 5   #
+# Web Server  : Apache 2  #
+# PHP version : 5.3       #
 ###########################
 
 include apache
 include mysql
 include php
 
-$docroot = '/vagrant/pyrocms/'
+$docroot = '/vagrant/www/pyrocms/'
 
 # Apache setup
 class {'apache::php': }
@@ -26,19 +30,6 @@ php::module { ['xdebug', 'mysql', 'curl', 'gd'] :
     notify => [ Service['httpd'], ],
 }
 
-# PHPUnit
-package { 'php-pear' : ensure => 'installed' }
-
-exec { "phpunit":
-    command => "/usr/bin/pear upgrade pear && \
-                /usr/bin/pear channel-discover pear.phpunit.de && \
-                /usr/bin/pear channel-discover components.ez.no && \
-                /usr/bin/pear channel-discover pear.symfony-project.com && \
-                /usr/bin/pear install --alldeps phpunit/PHPUnit",
-    creates => "/usr/bin/phpunit",
-    require => Package["php-pear"],
-}
-
 # MySQL Server
 class { 'mysql::server':
   config_hash => { 'root_password' => 'wh4ty0ul00kingat' }
@@ -53,7 +44,7 @@ mysql::db { 'pyrocms':
 }
 
 # Other Packages
-$extras = ['vim', 'curl']
+$extras = ['vim', 'curl', 'phpunit']
 package { $extras : ensure => 'installed' }
 
 # PyroCMS Setup
