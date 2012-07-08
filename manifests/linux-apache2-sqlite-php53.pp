@@ -32,7 +32,7 @@ package { 'php5-sqlite' : ensure => 'installed' }
 php::module { ['xdebug', 'curl', 'gd'] : 
     notify => [ Service['httpd'], ],
 }
-php::conf { [ 'sqlite', 'pdo', ]:
+php::conf { [ 'sqlite3', 'pdo', 'pdo_sqlite']:
     require => Package['sqlite'],
     notify  => Service['httpd'],
 }
