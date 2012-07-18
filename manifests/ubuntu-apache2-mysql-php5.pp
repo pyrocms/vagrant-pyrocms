@@ -29,10 +29,14 @@ a2mod { 'rewrite': ensure => present; }
 php::module { ['xdebug', 'mysql', 'curl', 'gd'] : 
     notify => [ Service['httpd'], ],
 }
+php::conf { [ 'pdo', 'pdo_mysql']:
+    require => Package['php5-mysql'],
+    notify  => Service['httpd'],
+}
 
 # MySQL Server
 class { 'mysql::server':
-  config_hash => { 'root_password' => 'wh4ty0ul00kingat' }
+  config_hash => { 'root_password' => 'l1k3ab0ss' }
 }
 
 mysql::db { 'pyrocms':

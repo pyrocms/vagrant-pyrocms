@@ -12,6 +12,7 @@ include sqlite
 include php
 
 $docroot = '/vagrant/www/pyrocms/'
+$db_location = "/vagrant/db/pyrocms.sqlite"
 
 # Apache setup
 class {'apache::php': }
@@ -48,11 +49,6 @@ define sqlite::db(
     $sqlite_cmd = 'sqlite3'
   ) {
 
-  $safe_location = $location ? {
-    ''      => "/vagrant/db/pyrocms.db",
-    default => $location,
-  }
-
   file { $safe_location:
     ensure => $ensure,
     owner  => $owner,
@@ -61,7 +57,7 @@ define sqlite::db(
   }
 
   exec { "create_pyrocms_db":
-    command     => "${sqlite_cmd} $safe_location",
+    command     => "${sqlite_cmd} $db_location",
     path        => '/usr/bin:/usr/local/bin',
     refreshonly => true,
   }
