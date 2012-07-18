@@ -7,3 +7,6 @@
 [submodule "modules/sqlite"]
 	path = modules/sqlite
 	url = git://github.com/puppetlabs/puppetlabs-sqlite.git
+[submodule "modules/postgresql"]
+	path = modules/postgresql
+	url = git://github.com/akumria/puppet-postgresql.git

@@ -2,67 +2,43 @@
 # PyroCMS Puppet Config   #
 ###########################
 # OS          : Linux     #
-# Database    : SQLite 3  #
+# Database    : MySQL 5   #
 # Web Server  : Apache 2  #
 # PHP version : 5.3       #
 ###########################
 
 include apache
 include php
-include sqlite
+include postgresql
 
 $docroot = '/vagrant/www/pyrocms/'
-$db_location = "/vagrant/db/pyrocms.sqlite"
 
 # Apache setup
 class {'apache::php': }
 
 apache::vhost { 'local.pyrocms':
-	priority => '20',
-	port => '80',
-	docroot => $docroot,
-	configure_firewall => false,
+  priority => '20',
+  port => '80',
+  docroot => $docroot,
+  configure_firewall => false,
 }
 
 a2mod { 'rewrite': ensure => present; }
 
-
 # PHP Extensions
-package { 'php5-sqlite' : ensure => 'installed' }
-
-php::module { ['xdebug', 'curl', 'gd'] : 
+php::module { ['xdebug', 'pgsql', 'curl', 'gd'] : 
     notify => [ Service['httpd'], ],
 }
-php::conf { [ 'pdo', 'pdo_sqlite']:
-    require => Package['sqlite'],
+php::conf { [ 'pdo', 'pdo_pgsql']:
+    require => Package['php5-pgsql'],
     notify  => Service['httpd'],
 }
 
-# SQLite
-
-define sqlite::db(
-    $location   = '',
-    $owner      = 'root',
-    $group      = 0,
-    $mode       = '755',
-    $ensure     = present,
-    $sqlite_cmd = 'sqlite3'
-  ) {
-
-  file { $safe_location:
-    ensure => $ensure,
-    owner  => $owner,
-    group  => $group,
-    notify => Exec["create_pyrocms_db"],
-  }
-
-  exec { "create_pyrocms_db":
-    command     => "${sqlite_cmd} $db_location",
-    path        => '/usr/bin:/usr/local/bin',
-    refreshonly => true,
-  }
+# PostgreSQL Server
+postgresql::db { 'pyrocms':
+    owner     => 'pyrocms',
+    password => 'password',
 }
-
 
 # Other Packages
 $extras = ['vim', 'curl', 'phpunit']

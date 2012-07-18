@@ -8,8 +8,8 @@
 ###########################
 
 include apache
-include mysql
 include php
+include mysql
 
 $docroot = '/vagrant/www/pyrocms/'
 
