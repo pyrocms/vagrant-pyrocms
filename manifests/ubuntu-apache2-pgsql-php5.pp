@@ -2,7 +2,7 @@
 # PyroCMS Puppet Config   #
 ###########################
 # OS          : Linux     #
-# Database    : MySQL 5   #
+# Database    : Postgres 9#
 # Web Server  : Apache 2  #
 # PHP version : 5.3       #
 ###########################
@@ -35,6 +35,8 @@ php::conf { [ 'pdo', 'pdo_pgsql']:
 }
 
 # PostgreSQL Server
+class {'postgresql::server': }
+
 postgresql::db { 'pyrocms':
     owner     => 'pyrocms',
     password => 'password',
