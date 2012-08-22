@@ -10,6 +10,3 @@
 [submodule "modules/postgresql"]
 	path = modules/postgresql
 	url = git://github.com/akumria/puppet-postgresql.git
-[submodule "puppet"]
-	path = puppet
-	url = git://github.com/pyrocms/devops-puppet.git
