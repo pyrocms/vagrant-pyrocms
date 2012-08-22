@@ -51,7 +51,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :puppet do |puppet|
     puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
     puppet.manifests_path = "puppet/manifests"
-    puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
+    puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
     puppet.module_path  = "puppet/modules"
   end
 
