@@ -47,12 +47,59 @@ Vagrant::Config.run do |config|
   # Update the server
   config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
-  # Enable Puppet
-  config.vm.provision :puppet do |puppet|
-    puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
-    puppet.manifests_path = "puppet/manifests"
-    puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
-    puppet.module_path  = "puppet/modules"
+
+
+  ###
+  #  Creates a basic LAMP stack with MySQL
+  #  
+  #  To launch run: vagrant up OR vagrant up default
+  ###
+  config.vm.define :default do |default_config|
+
+    # Enable Puppet
+    default_config.vm.provision :puppet do |puppet|
+      puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
+      puppet.manifests_path = "puppet/manifests"
+      puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
+      puppet.module_path  = "puppet/modules"
+    end
+
+  end
+
+
+  ###
+  #  Creates an instance with SQLite as the database
+  #  
+  #  To launch run: vagrant up sqlite
+  ###
+  config.vm.define :sqlite do |sqlite_config|
+
+    # Enable Puppet
+    sqlite_config.vm.provision :puppet do |puppet|
+      puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
+      puppet.manifests_path = "puppet/manifests"
+      puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
+      puppet.module_path  = "puppet/modules"
+    end
+
+  end
+
+
+  ###
+  #  Creates an instance using PostgreSQL as the database
+  #  
+  #  To launch run: vagrant up pgsql
+  ###
+  config.vm.define :pgsql do |pgsql_config|
+
+    # Enable Puppet
+    pgsql_config.vm.provision :puppet do |puppet|
+      puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
+      puppet.manifests_path = "puppet/manifests"
+      puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
+      puppet.module_path  = "puppet/modules"
+    end
+
   end
 
 end
