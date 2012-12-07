@@ -28,7 +28,7 @@ Vagrant::Config.run do |config|
   # via the IP. Host-only networks can talk to the host machine as well as
   # any other machines on the same network, but cannot be accessed (through this
   # network interface) by any external networks.
-  config.vm.network :hostonly, "192.168.33.10"
+  config.vm.network :hostonly, "198.18.0.201"
 
   # Set the default project share to use nfs
   config.vm.share_folder("v-web", "/vagrant/www", "./www", :nfs => true)
@@ -48,7 +48,6 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
 
-
   ###
   #  Creates a basic LAMP stack with MySQL
   #  
@@ -58,7 +57,7 @@ Vagrant::Config.run do |config|
 
     # Enable Puppet
     default_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
+      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
       puppet.module_path  = "puppet/modules"
@@ -76,7 +75,7 @@ Vagrant::Config.run do |config|
 
     # Enable Puppet
     sqlite_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
+      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
       puppet.module_path  = "puppet/modules"
@@ -94,7 +93,7 @@ Vagrant::Config.run do |config|
 
     # Enable Puppet
     pgsql_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "local.pyrocms", "hostname" => "www" } 
+      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
       puppet.module_path  = "puppet/modules"
