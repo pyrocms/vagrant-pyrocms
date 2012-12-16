@@ -31,8 +31,8 @@ Vagrant::Config.run do |config|
   config.vm.network :hostonly, "198.18.0.201"
 
   # Set the default project share to use nfs
-  config.vm.share_folder("v-web", "/vagrant/www", "./www", :nfs => true)
-  config.vm.share_folder("v-db", "/vagrant/db", "./db", :nfs => true)
+  config.vm.share_folder "v-web", "/vagrant/www", "./www", :owner => "www-data", :group => "www-data"
+  # config.vm.share_folder "v-db", "/vagrant/db", "./db"
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
@@ -71,17 +71,17 @@ Vagrant::Config.run do |config|
   #  
   #  To launch run: vagrant up sqlite
   ###
-  config.vm.define :sqlite do |sqlite_config|
+  # config.vm.define :sqlite do |sqlite_config|
 
-    # Enable Puppet
-    sqlite_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
-      puppet.manifests_path = "puppet/manifests"
-      puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
-      puppet.module_path  = "puppet/modules"
-    end
+  #   # Enable Puppet
+  #   sqlite_config.vm.provision :puppet do |puppet|
+  #     puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
+  #     puppet.manifests_path = "puppet/manifests"
+  #     puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
+  #     puppet.module_path  = "puppet/modules"
+  #   end
 
-  end
+  # end
 
 
   ###
@@ -89,16 +89,16 @@ Vagrant::Config.run do |config|
   #  
   #  To launch run: vagrant up pgsql
   ###
-  config.vm.define :pgsql do |pgsql_config|
+  # config.vm.define :pgsql do |pgsql_config|
 
-    # Enable Puppet
-    pgsql_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
-      puppet.manifests_path = "puppet/manifests"
-      puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
-      puppet.module_path  = "puppet/modules"
-    end
+  #   # Enable Puppet
+  #   pgsql_config.vm.provision :puppet do |puppet|
+  #     puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
+  #     puppet.manifests_path = "puppet/manifests"
+  #     puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
+  #     puppet.module_path  = "puppet/modules"
+  #   end
 
-  end
+  # end
 
 end
