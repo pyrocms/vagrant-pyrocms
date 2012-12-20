@@ -23,8 +23,24 @@ Install [Vagrant](http://vagrantup.com/v1/docs/getting-started/index.html) (whic
 	cd ~/vagrant/pyrocms
 	vagrant up
 
-That is all you need to get a virtual machine with everything you need set up to run PyroCMS. Check it is working by browsing 
-to `http://localhost:8089/`. You can configure it to work on any port, we just put it there as 8080 is often taken too.
+This will actually launch 3 boxes:
+
+	* mysql
+	* sqlite
+	* postgres
+
+Each box has it's own local IP and its own virtual host set up, so you can set the following in your `/etc/hosts` file:
+
+198.18.0.201 dev.pyrocms.mysql
+198.18.0.202 dev.pyrocms.sqlite
+198.18.0.203 dev.pyrocms.postgres
+
+Then simply browse to `http://dev.pyrocms.mysql/`. If you would like to only bring up one server then run:
+
+	vagrant halt # takes down all servers
+	vagrant up mysql # bring up just the one
+
+This will hopefully give you a chance to play around with different systems other than just MySQL for a change.
 
 ## Configuring Vagrant
 

@@ -4,39 +4,25 @@
 Vagrant::Config.run do |config|
 
   # Operating System
-
-  ## Ubuntu 10.04 LTS (32-bit)
-  #config.vm.box = "lucid32"
-  #config.vm.box_url = "http://files.vagrantup.com/lucid32.box"
-
-  ## Ubuntu 10.04 LTS (64-bit)
-  # config.vm.box = "lucid64"
-  # config.vm.box_url = "http://files.vagrantup.com/lucid64.box"
  
   ## Ubuntu 12.04 LTS (32-bit)
   # config.vm.box = "precise32"
   # config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
   ## Ubuntu 12.04 LTS (64-bit)
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  # config.vm.box = "precise64"
+  # config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  ## Ubuntu 12.10 LTS (64-bit)
+  config.vm.box = "quantal64"
+  config.vm.box_url = "https://github.com/downloads/roderik/VagrantQuantal64Box/quantal64.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
 
-  # Assign this VM to a host-only network IP, allowing you to access it
-  # via the IP. Host-only networks can talk to the host machine as well as
-  # any other machines on the same network, but cannot be accessed (through this
-  # network interface) by any external networks.
-  config.vm.network :hostonly, "198.18.0.201"
-
   # Set the default project share to use nfs
   config.vm.share_folder("v-web", "/vagrant/www", "./www", :nfs => true)
   config.vm.share_folder("v-db", "/vagrant/db", "./db", :nfs => true)
-
-  # Forward a port from the guest to the host, which allows for outside
-  # computers to access the VM, whereas host only networking does not.
-  config.vm.forward_port 80, 8888
 
   # Set the Timezone to something useful
   config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
@@ -53,11 +39,14 @@ Vagrant::Config.run do |config|
   #  
   #  To launch run: vagrant up OR vagrant up default
   ###
-  config.vm.define :default do |default_config|
+  config.vm.define :mysql do |default_config|
+
+    # Map dev.pyrocms.mysql to this IP
+    config.vm.network :hostonly, "198.18.0.201"
 
     # Enable Puppet
     default_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
+      puppet.facter = { "fqdn" => "dev.pyrocms.mysql", "hostname" => "www" } 
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
       puppet.module_path  = "puppet/modules"
@@ -73,9 +62,12 @@ Vagrant::Config.run do |config|
   ###
   config.vm.define :sqlite do |sqlite_config|
 
+    # Map dev.pyrocms.sqlite to this IP
+    config.vm.network :hostonly, "198.18.0.202"
+
     # Enable Puppet
     sqlite_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
+      puppet.facter = { "fqdn" => "dev.pyrocms.sqlite", "hostname" => "www" } 
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
       puppet.module_path  = "puppet/modules"
@@ -91,9 +83,12 @@ Vagrant::Config.run do |config|
   ###
   config.vm.define :pgsql do |pgsql_config|
 
+    # Map dev.pyrocms.postgres to this IP
+    config.vm.network :hostonly, "198.18.0.203"
+
     # Enable Puppet
     pgsql_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.community", "hostname" => "www" } 
+      puppet.facter = { "fqdn" => "dev.pyrocms.postgres", "hostname" => "www" } 
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
       puppet.module_path  = "puppet/modules"
