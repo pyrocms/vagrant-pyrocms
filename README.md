@@ -31,9 +31,9 @@ This will actually launch 3 boxes:
 
 Each box has it's own local IP and its own virtual host set up, so you can set the following in your `/etc/hosts` file:
 
-198.18.0.201 dev.pyrocms.mysql
-198.18.0.202 dev.pyrocms.sqlite
-198.18.0.203 dev.pyrocms.postgres
+	198.18.0.201 dev.pyrocms.mysql
+	198.18.0.202 dev.pyrocms.sqlite
+	198.18.0.203 dev.pyrocms.postgres
 
 Then simply browse to `http://dev.pyrocms.mysql/`. If you would like to only bring up one server then run:
 
