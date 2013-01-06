@@ -13,3 +13,6 @@
 [submodule "puppet"]
 	path = puppet
 	url = git://github.com/pyrocms/devops-puppet.git
+[submodule "www/pyrocms-pro"]
+	path = www/pyrocms-pro
+	url = git@github.com:pyrocms/pyrocms-professional.git

@@ -23,17 +23,28 @@ Install [Vagrant](http://vagrantup.com/v1/docs/getting-started/index.html) (whic
 	cd ~/vagrant/pyrocms
 	vagrant up
 
-This will actually launch 3 boxes:
+This will actually launch 6 boxes:
 
 	* mysql
 	* sqlite
 	* postgres
+	* pro_mysql
+	* pro_sqlite
+	* pro_postgres
+
+_**Note**: The boxes prefixed with "pro" are Profesional only. They will only work if you have access to the Professional repo on GitHub. This is only going to be the development team and the 100 or so people who have specifically asked for access. If you would like to ask for access then just get in touch, otherwise you can paste your downloaded ZIP file contents into the `/vagrant/www/pyrocms-pro` folder and this will work just as well._
 
 Each box has it's own local IP and its own virtual host set up, so you can set the following in your `/etc/hosts` file:
 
+# PyroCMS Community
 198.18.0.201 dev.pyrocms.mysql
 198.18.0.202 dev.pyrocms.sqlite
 198.18.0.203 dev.pyrocms.postgres
+
+# PyroCMS Professioanl - optional
+198.18.0.211 dev.pyrocms-pro.mysql
+198.18.0.212 dev.pyrocms-pro.sqlite
+198.18.0.213 dev.pyrocms-pro.postgres
 
 Then simply browse to `http://dev.pyrocms.mysql/`. If you would like to only bring up one server then run:
 

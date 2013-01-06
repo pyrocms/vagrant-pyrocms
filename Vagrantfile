@@ -26,34 +26,53 @@ Vagrant::Config.run do |config|
 
   # Set the Timezone to something useful
   config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
-  
-  # Enable PHP 5.4 (comment this out to use Ubuntu's default: which is probably 5.3)
-  # config.vm.provision :shell, :inline => "apt-get install -y python-software-properties && add-apt-repository ppa:ondrej/php5"
 
   # Update the server
   config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
-
   ###
   #  Creates a basic LAMP stack with MySQL
   #  
-  #  To launch run: vagrant up OR vagrant up default
+  #  To launch run: vagrant up mysql
   ###
-  config.vm.define :mysql do |default_config|
-
+  config.vm.define :mysql do |mysql_config|
     # Map dev.pyrocms.mysql to this IP
     config.vm.network :hostonly, "198.18.0.201"
 
     # Enable Puppet
-    default_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.mysql", "hostname" => "www" } 
-      puppet.manifests_path = "puppet/manifests"
+    mysql_config.vm.provision :puppet do |puppet|
+      puppet.facter = { 
+        "fqdn" => "dev.pyrocms-pro.mysql", 
+        "hostname" => "www", 
+        "docroot" => '/vagrant/www/pyrocms/'
+      }
       puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
+      puppet.manifests_path = "puppet/manifests"
       puppet.module_path  = "puppet/modules"
     end
-
   end
 
+  ###
+  #  Creates a basic LAMP stack with MySQL and Professional
+  #  
+  #  To launch run: vagrant up pro_mysql
+  ###
+  config.vm.define :pro_mysql do |mysql_config|
+    # Map dev.pyrocms-pro.mysql to this IP
+    mysql_config.vm.network :hostonly, "198.18.0.211"
+
+    # Enable Puppet
+    mysql_config.vm.provision :puppet do |puppet|
+      puppet.facter = { 
+        "fqdn" => "dev.pyrocms-pro.mysql", 
+        "hostname" => "www", 
+        "docroot" => '/vagrant/www/pyrocms-pro/'
+      } 
+      puppet.manifest_file  = "ubuntu-apache2-mysql-php5.pp"
+      puppet.manifests_path = "puppet/manifests"
+      puppet.module_path  = "puppet/modules"
+    end
+  end
 
   ###
   #  Creates an instance with SQLite as the database
@@ -61,20 +80,43 @@ Vagrant::Config.run do |config|
   #  To launch run: vagrant up sqlite
   ###
   config.vm.define :sqlite do |sqlite_config|
-
     # Map dev.pyrocms.sqlite to this IP
-    config.vm.network :hostonly, "198.18.0.202"
+    sqlite_config.vm.network :hostonly, "198.18.0.202"
 
     # Enable Puppet
     sqlite_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.sqlite", "hostname" => "www" } 
-      puppet.manifests_path = "puppet/manifests"
+      puppet.facter = { 
+        "fqdn" => "dev.pyrocms-pro.sqlite", 
+        "hostname" => "www", 
+        "docroot" => '/vagrant/www/pyrocms/'
+      } 
       puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
+      puppet.manifests_path = "puppet/manifests"
       puppet.module_path  = "puppet/modules"
     end
-
   end
 
+  ###
+  #  Creates an instance with SQLite as the database and Professional
+  #  
+  #  To launch run: vagrant up pro_sqlite
+  ###
+  config.vm.define :pro_sqlite do |sqlite_config|
+    # Map dev.pyrocms.sqlite to this IP
+    sqlite_config.vm.network :hostonly, "198.18.0.212"
+
+    # Enable Puppet
+    sqlite_config.vm.provision :puppet do |puppet|
+      puppet.facter = { 
+        "fqdn" => "dev.pyrocms-pro.sqlite", 
+        "hostname" => "www", 
+        "docroot" => '/vagrant/www/pyrocms-pro/'
+      } 
+      puppet.manifest_file  = "ubuntu-apache2-sqlite-php5.pp"
+      puppet.manifests_path = "puppet/manifests"
+      puppet.module_path  = "puppet/modules"
+    end
+  end
 
   ###
   #  Creates an instance using PostgreSQL as the database
@@ -82,18 +124,42 @@ Vagrant::Config.run do |config|
   #  To launch run: vagrant up pgsql
   ###
   config.vm.define :pgsql do |pgsql_config|
-
     # Map dev.pyrocms.postgres to this IP
-    config.vm.network :hostonly, "198.18.0.203"
+    pgsql_config.vm.network :hostonly, "198.18.0.203"
 
     # Enable Puppet
     pgsql_config.vm.provision :puppet do |puppet|
-      puppet.facter = { "fqdn" => "dev.pyrocms.postgres", "hostname" => "www" } 
-      puppet.manifests_path = "puppet/manifests"
+      puppet.facter = { 
+        "fqdn" => "dev.pyrocms-pro.postgres", 
+        "hostname" => "www", 
+        "docroot" => '/vagrant/www/pyrocms/'
+      } 
       puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
+      puppet.manifests_path = "puppet/manifests"
       puppet.module_path  = "puppet/modules"
     end
+  end
 
+  ###
+  #  Creates an instance using PostgreSQL as the database
+  #  
+  #  To launch run: vagrant up pro_pgsql
+  ###
+  config.vm.define :pro_pgsql do |pgsql_config|
+    # Map dev.pyrocms.postgres to this IP
+    pgsql_config.vm.network :hostonly, "198.18.0.213"
+
+    # Enable Puppet
+    pgsql_config.vm.provision :puppet do |puppet|
+      puppet.facter = { 
+        "fqdn" => "dev.pyrocms-pro.postgres", 
+        "hostname" => "www", 
+        "docroot" => '/vagrant/www/pyrocms-pro/'
+      } 
+      puppet.manifest_file  = "ubuntu-apache2-pgsql-php5.pp"
+      puppet.manifests_path = "puppet/manifests"
+      puppet.module_path  = "puppet/modules"
+    end
   end
 
 end
