@@ -42,7 +42,7 @@ Vagrant::Config.run do |config|
     # Enable Puppet
     mysql_config.vm.provision :puppet do |puppet|
       puppet.facter = { 
-        "fqdn" => "dev.pyrocms-pro.mysql", 
+        "fqdn" => "dev.pyrocms.mysql", 
         "hostname" => "www", 
         "docroot" => '/vagrant/www/pyrocms/'
       }
@@ -57,12 +57,12 @@ Vagrant::Config.run do |config|
   #  
   #  To launch run: vagrant up pro_mysql
   ###
-  config.vm.define :pro_mysql do |mysql_config|
+  config.vm.define :pro_mysql do |mysqlp_config|
     # Map dev.pyrocms-pro.mysql to this IP
-    mysql_config.vm.network :hostonly, "198.18.0.211"
+    mysqlp_config.vm.network :hostonly, "198.18.0.211"
 
     # Enable Puppet
-    mysql_config.vm.provision :puppet do |puppet|
+    mysqlp_config.vm.provision :puppet do |puppet|
       puppet.facter = { 
         "fqdn" => "dev.pyrocms-pro.mysql", 
         "hostname" => "www", 
