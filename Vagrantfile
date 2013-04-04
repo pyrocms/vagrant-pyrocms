@@ -21,8 +21,8 @@ Vagrant::Config.run do |config|
   # config.vm.boot_mode = :gui
 
   # Set the default project share to use nfs
-  config.vm.share_folder("v-web", "/vagrant/www", "./www", :nfs => true)
-  config.vm.share_folder("v-db", "/vagrant/db", "./db", :nfs => true)
+  config.vm.share_folder "v-web", "/vagrant/www/", "./www", :owner => "www-data", :group => "www-data", :extra => "dmode=775,fmode=644"
+  config.vm.share_folder "v-db", "/vagrant/db/", "./db", :owner => "www-data", :group => "www-data", :extra => "dmode=775,fmode=644"
 
   # Set the Timezone to something useful
   config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
