@@ -37,14 +37,16 @@ _**Note**: The boxes prefixed with "pro" are Profesional only. They will only wo
 Each box has it's own local IP and its own virtual host set up, so you can set the following in your `/etc/hosts` file:
 
 # PyroCMS Community
-198.18.0.201 dev.pyrocms.mysql
-198.18.0.202 dev.pyrocms.sqlite
-198.18.0.203 dev.pyrocms.postgres
 
-# PyroCMS Professioanl - optional
-198.18.0.211 dev.pyrocms-pro.mysql
-198.18.0.212 dev.pyrocms-pro.sqlite
-198.18.0.213 dev.pyrocms-pro.postgres
+	198.18.0.201 dev.pyrocms.mysql
+	198.18.0.202 dev.pyrocms.sqlite
+	198.18.0.203 dev.pyrocms.postgres
+
+# PyroCMS Professional (optional)
+
+	198.18.0.211 dev.pyrocms-pro.mysql
+	198.18.0.212 dev.pyrocms-pro.sqlite
+	198.18.0.213 dev.pyrocms-pro.postgres
 
 Then simply browse to `http://dev.pyrocms.mysql/`. If you would like to only bring up one server then run:
 
