@@ -6,7 +6,7 @@ Vagrant::configure("2") do |config|
   # Operating System
  
   ## Ubuntu 12.10 (64-bit)
-  config.vm.box = "quantal64"
+  config.vm.box = "pyro-quantal64"
   config.vm.box_url = "https://dl.dropboxusercontent.com/u/37978558/quantal64.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
