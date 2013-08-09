@@ -9,9 +9,6 @@ Vagrant::configure("2") do |config|
   config.vm.box = "pyro-quantal64"
   config.vm.box_url = "https://dl.dropboxusercontent.com/u/37978558/quantal64.box"
 
-  # Boot with a GUI so you can see the screen. (Default is headless)
-  # config.vm.boot_mode = :gui
-
   # Set the default project share to use nfs
   config.vm.synced_folder "./www", "/vagrant/www/", :nfs => true
   config.vm.synced_folder "./db", "/vagrant/db/", :nfs => true
