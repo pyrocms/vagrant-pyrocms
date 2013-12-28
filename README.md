@@ -16,7 +16,7 @@ Puppet manages your servers: describe machine configurations in an easy-to-read 
 
 ## Installation
 
-Install [Vagrant](http://vagrantup.com/v1/docs/getting-started/index.html) (which requires [VirtualBox](https://www.virtualbox.org/wiki/Downloads)) then run the following commands:
+Install [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) (which requires [VirtualBox](https://www.virtualbox.org/wiki/Downloads)) then run the following commands:
 
 	$ mkdir ~/vagrant
 	$ git clone --recursive git://github.com/pyrocms/vagrant-pyrocms.git ~/vagrant/pyrocms
@@ -32,7 +32,7 @@ There are 6 available boxes:
 	* pro_sqlite
 	* pro_postgres
 
-_**Note**: The boxes prefixed with `pro_` are Profesional only, which will be explained below.
+**Note**: The boxes prefixed with `pro_` are Profesional only, which will be explained below.
 
 Each box has it's own local IP and its own virtual host set up, so you can set the following in 
 your `/etc/hosts` file:
