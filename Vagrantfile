@@ -5,13 +5,13 @@ Vagrant::configure("2") do |config|
 
   # Operating System
  
-  ## Ubuntu 12.10 (64-bit)
+  ## Ubuntu 13.10 (64-bit)
   config.vm.box = "pyro-quantal64"
   config.vm.box_url = "https://dl.dropboxusercontent.com/u/37978558/quantal64.box"
 
   # Set the default project share to use nfs
-  config.vm.synced_folder "./www", "/vagrant/www/", :nfs => true
-  config.vm.synced_folder "./db", "/vagrant/db/", :nfs => true
+  config.vm.synced_folder "./www", "/vagrant/www/", :owner => "www-data", :group => "www-data", :mount_options => ['dmode=775', 'fmode=644']
+  config.vm.synced_folder "./db", "/vagrant/db/", :owner => "www-data", :group => "www-data", :mount_options => ['dmode=775', 'fmode=644']
 
   # Set the Timezone to something useful
   config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
@@ -77,7 +77,7 @@ Vagrant::configure("2") do |config|
     # Enable Puppet
     sqlite_config.vm.provision :puppet do |puppet|
       puppet.facter = { 
-        "fqdn" => "dev.pyrocms-pro.sqlite", 
+        "fqdn" => "dev.pyrocms.sqlite", 
         "hostname" => "www", 
         "docroot" => '/vagrant/www/pyrocms/'
       } 
@@ -123,7 +123,7 @@ Vagrant::configure("2") do |config|
     # Enable Puppet
     pgsql_config.vm.provision :puppet do |puppet|
       puppet.facter = { 
-        "fqdn" => "dev.pyrocms-pro.postgres", 
+        "fqdn" => "dev.pyrocms.postgres", 
         "hostname" => "www", 
         "docroot" => '/vagrant/www/pyrocms/'
       }
