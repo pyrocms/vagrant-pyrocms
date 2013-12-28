@@ -21,7 +21,7 @@ Install [Vagrant](http://vagrantup.com/v1/docs/getting-started/index.html) (whic
 	$ mkdir ~/vagrant
 	$ git clone --recursive git://github.com/pyrocms/vagrant-pyrocms.git ~/vagrant/pyrocms
 	$ cd ~/vagrant/pyrocms
-	$ vagrant up mysql
+	$ vagrant up <box>
 
 There are 6 available boxes:
 
@@ -32,17 +32,14 @@ There are 6 available boxes:
 	* pro_sqlite
 	* pro_postgres
 
-_**Note**: The boxes prefixed with "pro" are Profesional only, which will be explained below.
+_**Note**: The boxes prefixed with `pro_` are Profesional only, which will be explained below.
 
-Each box has it's own local IP and its own virtual host set up, so you can set the following in your `/etc/hosts` file:
-
-# PyroCMS Community
+Each box has it's own local IP and its own virtual host set up, so you can set the following in 
+your `/etc/hosts` file:
 
 	198.18.0.201 dev.pyrocms.mysql
 	198.18.0.202 dev.pyrocms.sqlite
 	198.18.0.203 dev.pyrocms.postgres
-
-# PyroCMS Professional (optional)
 
 	198.18.0.211 dev.pyrocms-pro.mysql
 	198.18.0.212 dev.pyrocms-pro.sqlite
