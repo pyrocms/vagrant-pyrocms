@@ -1,18 +1,6 @@
 [submodule "www/pyrocms"]
 	path = www/pyrocms
 	url = git://github.com/pyrocms/pyrocms.git
-[submodule "modules/php"]
-	path = modules/php
-	url = git://github.com/philsturgeon/puppet-php.git
-[submodule "modules/sqlite"]
-	path = modules/sqlite
-	url = git://github.com/puppetlabs/puppetlabs-sqlite.git
-[submodule "modules/postgresql"]
-	path = modules/postgresql
-	url = git://github.com/akumria/puppet-postgresql.git
 [submodule "puppet"]
 	path = puppet
-	url = git://github.com/pyrocms/devops-puppet.git
-[submodule "www/pyrocms-pro"]
-	path = www/pyrocms-pro
-	url = git@github.com:pyrocms/pyrocms-professional.git
+	url = git://github.com/pyrocms/puppet-pyrocms.git
